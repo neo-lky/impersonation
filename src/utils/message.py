@@ -16,7 +16,7 @@ class Message(BaseModel):
 
     @field_validator("sender")
     @classmethod
-    def sanitize_sender(cls, v):
+    def sanitize_sender(cls, v: str) -> str:
         """Sanitize the sender name before setting it."""
         return sanitize_name(v)
 
