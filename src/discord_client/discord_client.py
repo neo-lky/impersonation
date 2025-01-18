@@ -2,7 +2,6 @@
 
 import asyncio
 import logging
-import time
 from datetime import datetime, timedelta
 
 import discord
@@ -46,7 +45,6 @@ class DiscordClient(discord.Client):
                 return
             except Exception as e:
                 self.logger.error(f"An error occurred: {e}")
-            time.sleep(5)
 
     async def on_ready(self) -> None:
         """Print a message when the client is connected."""
@@ -70,15 +68,15 @@ class DiscordClient(discord.Client):
         self.logger.info(
             "Past messages: \n%s", "\n".join(f"{m!s}" for m in past_messages)
         )
-        await asyncio.sleep(0.5)
+        await asyncio.sleep(1)
 
         responses = self.agent.generate_response(past_messages)
         self.logger.info("Responses: \n%s", "\n".join(f"{r!s}" for r in responses))
         for response in responses:
             async with message.channel.typing():
-                await asyncio.sleep(len(response.content) * 0.15)
+                await asyncio.sleep(len(response.content) * 0.25)
                 await message.channel.send(response.content)
-            await asyncio.sleep(0.5)
+            await asyncio.sleep(1)
 
     async def _get_past_messages(self, channel: discord.DMChannel) -> list[Message]:
         four_hours_ago = datetime.now() - timedelta(hours=4)

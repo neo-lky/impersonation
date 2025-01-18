@@ -6,5 +6,5 @@ from pydantic import BaseModel
 class Response(BaseModel):
     """A response from the ConversationAgent."""
 
-    other_person_finished_talking: bool
+    is_other_person_finished_talking: bool
     responses: list[str] | None

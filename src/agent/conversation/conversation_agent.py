@@ -67,7 +67,7 @@ class ConversationAgent(Agent):
         if (
             response is None
             or response.responses is None
-            or not response.other_person_finished_talking
+            or not response.is_other_person_finished_talking
         ):
             return []
 
