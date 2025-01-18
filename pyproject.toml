@@ -1,0 +1,48 @@
+[tool.poetry]
+name = "twitter-agent"
+version = "0.1.0"
+description = ""
+authors = ["Neo Lee <neo.lky852@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+python-twitter-v2 = "^0.9.2"
+openai = "^1.59.6"
+python-dotenv = "^1.0.1"
+pydantic = "^2.10.5"
+urllib3 = "<2.0.0"
+discord-py-self = "^2.0.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.mypy]
+ignore_missing_imports = true
+
+[tool.ruff.lint]
+select = [
+    "D",
+    "E",  # pycodestyle
+    "F",  # Pyflakes
+    "B",  # flake8-bugbear
+    "UP", # pyupgrade
+    "I",  # isort
+    "SIM", # flake8-simplify
+    "RUF", # Ruff-specific
+    "N",  # naming
+    "C4", # comprehensions
+    "PIE" # misc lints
+]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff]
+ignore = [
+    "D104",
+    "D105",
+    "D107",
+]
