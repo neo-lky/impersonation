@@ -1,6 +1,6 @@
 """A module for the GrokAgent class."""
 
-from openai import OpenAI
+from openai import AsyncOpenAI
 from openai.types.chat import (
     ChatCompletionAssistantMessageParam,
     ChatCompletionMessageParam,
@@ -19,7 +19,7 @@ class ConversationAgent(Agent):
 
     def __init__(self, name: str | None = None, api_key: str | None = None) -> None:
         super().__init__(name or "Grok")
-        self.client = OpenAI(
+        self.client = AsyncOpenAI(
             api_key=api_key or Config.OPENAI_API_KEY,
             # base_url="https://api.x.ai/v1",
         )
@@ -34,7 +34,7 @@ class ConversationAgent(Agent):
         with open(file_path, encoding="utf-8") as f:
             return "".join(f.readlines())
 
-    def generate_response(self, messages: list[Message]) -> list[Message]:
+    async def generate_response(self, messages: list[Message]) -> list[Message]:
         """Generate a response to a list of messages.
 
         Args:
@@ -57,12 +57,13 @@ class ConversationAgent(Agent):
             for message in messages
         ]
 
-        completion: ParsedChatCompletion[Response] = (
-            self.client.beta.chat.completions.parse(
-                model=self.model, messages=llm_messages, response_format=Response
-            )
+        completion: ParsedChatCompletion[
+            Response
+        ] = await self.client.beta.chat.completions.parse(
+            model=self.model, messages=llm_messages, response_format=Response
         )
         response = completion.choices[0].message.parsed
+        print(response)
 
         if (
             response is None

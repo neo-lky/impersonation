@@ -64,10 +64,13 @@ class DiscordClient(discord.Client):
         ):
             return
 
+        self.logger.info(
+            "Received message from %s: %s", message.author.name, message.content
+        )
         past_messages = await self._get_past_messages(message.channel)
         await asyncio.sleep(5)
 
-        responses = self.agent.generate_response(past_messages)
+        responses = await self.agent.generate_response(past_messages)
         self.logger.info("Responses: \n%s", "\n".join(f"{r!s}" for r in responses))
         for response in responses:
             async with message.channel.typing():

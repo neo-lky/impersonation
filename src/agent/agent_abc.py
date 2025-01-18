@@ -25,7 +25,7 @@ class Agent(ABC):
         self._name = sanitize_name(value)
 
     @abstractmethod
-    def generate_response(self, messages: list[Message]) -> list[Message]:
+    async def generate_response(self, messages: list[Message]) -> list[Message]:
         """Generate a response to a list of messages.
 
         Args:
