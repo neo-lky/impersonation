@@ -65,10 +65,7 @@ class DiscordClient(discord.Client):
             return
 
         past_messages = await self._get_past_messages(message.channel)
-        self.logger.info(
-            "Past messages: \n%s", "\n".join(f"{m!s}" for m in past_messages)
-        )
-        await asyncio.sleep(1)
+        await asyncio.sleep(5)
 
         responses = self.agent.generate_response(past_messages)
         self.logger.info("Responses: \n%s", "\n".join(f"{r!s}" for r in responses))
