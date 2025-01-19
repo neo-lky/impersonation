@@ -63,7 +63,6 @@ class ConversationAgent(Agent):
             model=self.model, messages=llm_messages, response_format=Response
         )
         response = completion.choices[0].message.parsed
-        print(response)
 
         if (
             response is None
