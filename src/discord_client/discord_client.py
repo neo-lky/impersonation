@@ -86,7 +86,7 @@ class DiscordClient(discord.Client):
             channel (discord.DMChannel): The channel to respond in.
         """
         try:
-            await asyncio.sleep(8)
+            await asyncio.sleep(6)
 
             past_messages = await self._get_past_messages(channel)
             responses = await self.agent.generate_response(past_messages)
