@@ -133,8 +133,8 @@ Ensure you have the following installed on your system:
 1. Clone the Repository
 
    ```sh
-   git clone https://github.com/your_username/your_repo_name.git
-   cd your_repo_name
+   git clone https://github.com/neo-lky/impersonation.git
+   cd impersonation
    ```
 
 2. Install Dependencies
@@ -245,15 +245,15 @@ Project Link: [https://github.com/neo-lky/impersonation](https://github.com/neo-
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 
 [contributors-shield]: https://img.shields.io/github/contributors/othneildrew/Best-README-Template.svg?style=for-the-badge
-[contributors-url]: https://github.com/othneildrew/Best-README-Template/graphs/contributors
+[contributors-url]: https://github.com/neo-lky/impersonation/graphs/contributors
 [forks-shield]: https://img.shields.io/github/forks/othneildrew/Best-README-Template.svg?style=for-the-badge
-[forks-url]: https://github.com/othneildrew/Best-README-Template/network/members
+[forks-url]: https://github.com/neo-lky/impersonation/network/members
 [stars-shield]: https://img.shields.io/github/stars/othneildrew/Best-README-Template.svg?style=for-the-badge
 [stars-url]: https://github.com/neo-lky/impersonation/stargazers
 [issues-shield]: https://img.shields.io/github/issues/othneildrew/Best-README-Template.svg?style=for-the-badge
 [issues-url]: https://github.com/neo-lky/impersonation/issues
 [license-shield]: https://img.shields.io/github/license/othneildrew/Best-README-Template.svg?style=for-the-badge
-[license-url]: https://github.com/othneildrew/Best-README-Template/blob/master/LICENSE.txt
+[license-url]: https://github.com/neo-lky/impersonation/blob/main/LICENSE
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/neo-lee-71b4a1222/
 [product-screenshot]: images/screenshot.png
