@@ -33,6 +33,8 @@ class DiscordClient(discord.Client):
         self.agent = agent or ConversationAgent()
         self.token = token or Config.DISCORD_TOKEN
 
+        self.pending_tasks: dict[int, asyncio.Task] = {}
+
     def start_client(self) -> None:
         """Start the Discord client."""
         while True:
@@ -65,18 +67,44 @@ class DiscordClient(discord.Client):
             return
 
         self.logger.info(
-            "Received message from %s: %s", message.author.name, message.content
+            f"Received message from {message.author.name}: {message.content}"
         )
-        past_messages = await self._get_past_messages(message.channel)
-        await asyncio.sleep(5)
+        channel_id = message.channel.id
+        if channel_id in self.pending_tasks:
+            task = self.pending_tasks[channel_id]
+            if not task.done():
+                task.cancel()
+                self.logger.debug(f"Cancelled existing task for channel {channel_id}")
 
-        responses = await self.agent.generate_response(past_messages)
-        self.logger.info("Responses: \n%s", "\n".join(f"{r!s}" for r in responses))
-        for response in responses:
-            async with message.channel.typing():
-                await asyncio.sleep(len(response.content) * 0.25)
-                await message.channel.send(response.content)
-            await asyncio.sleep(1)
+        task = asyncio.create_task(self._handle_response_after_delay(message.channel))
+        self.pending_tasks[channel_id] = task
+
+    async def _handle_response_after_delay(self, channel: discord.DMChannel) -> None:
+        """Wait for 5 seconds and respond to the latest message in the channel.
+
+        Args:
+            channel (discord.DMChannel): The channel to respond in.
+        """
+        try:
+            await asyncio.sleep(10)
+
+            past_messages = await self._get_past_messages(channel)
+            responses = await self.agent.generate_response(past_messages)
+            self.logger.info("Responses: \n%s", "\n".join(f"{r!s}" for r in responses))
+
+            for response in responses:
+                async with channel.typing():
+                    await asyncio.sleep(len(response.content) * 0.2)
+                    await channel.send(response.content)
+                await asyncio.sleep(1)
+
+        except asyncio.CancelledError:
+            self.logger.debug(f"Response task for channel {channel.id} was cancelled.")
+        except Exception as e:
+            self.logger.error(f"Error in handle_response_after_delay: {e}")
+        finally:
+            if channel.id in self.pending_tasks:
+                del self.pending_tasks[channel.id]
 
     async def _get_past_messages(self, channel: discord.DMChannel) -> list[Message]:
         four_hours_ago = datetime.now() - timedelta(hours=4)
