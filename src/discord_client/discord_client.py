@@ -80,7 +80,7 @@ class DiscordClient(discord.Client):
         self.pending_tasks[channel_id] = task
 
     async def _handle_response_after_delay(self, channel: discord.DMChannel) -> None:
-        """Wait for 5 seconds and respond to the latest message in the channel.
+        """Wait for a while and respond to the latest message in the channel.
 
         Args:
             channel (discord.DMChannel): The channel to respond in.
