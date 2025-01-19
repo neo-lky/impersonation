@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "twitter-agent"
+name = "impersonation"
 version = "0.1.0"
 description = ""
 authors = ["Neo Lee <neo.lky852@gmail.com>"]
