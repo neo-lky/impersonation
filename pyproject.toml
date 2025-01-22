@@ -13,6 +13,10 @@ python-dotenv = "^1.0.1"
 pydantic = "^2.10.5"
 urllib3 = "<2.0.0"
 discord-py-self = "^2.0.0"
+tweepy = {version = "^4.14.0", extras = ["async"]}
+oauthlib = "^3.2.2"
+async-lru = "^2.0.4"
+aiohttp = "^3.11.11"
 
 
 [build-system]

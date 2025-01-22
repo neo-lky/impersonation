@@ -19,7 +19,7 @@ class XAI(LLMClient):
 
     model = "grok-2-latest"
 
-    def __init__(self, api_key: str):
+    def __init__(self, api_key: str) -> None:
         super().__init__(api_key=api_key, base_url="https://api.x.ai/v1")
 
 
