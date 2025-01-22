@@ -6,9 +6,9 @@ from .agent.conversation import ConversationAgent, Message
 class ConversationManager:
     """A class that manages a conversation between a user and an agent."""
 
-    def __init__(self, user_name: str, agent: ConversationAgent) -> None:
-        self.user_name = user_name
+    def __init__(self, agent: ConversationAgent, user_name: str | None = None) -> None:
         self.agent = agent
+        self.user_name = user_name or "User"
         self.messages: list[Message] = []
 
     async def start_user_input_loop(self):
