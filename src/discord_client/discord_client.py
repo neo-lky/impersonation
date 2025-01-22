@@ -6,14 +6,13 @@ from datetime import datetime, timedelta
 
 import discord
 
-from ..agent import Agent, ConversationAgent
-from ..utils import Config, Message
+from ..agent.conversation import ConversationAgent, Message
 
 
 class DiscordClient(discord.Client):
     """A Discord client that can respond to messages."""
 
-    def __init__(self, agent: Agent | None = None, token: str | None = None) -> None:
+    def __init__(self, agent: ConversationAgent, token: str) -> None:
         super().__init__()
         self.logger = logging.getLogger("discord")
         self.logger.setLevel(logging.DEBUG)
@@ -30,10 +29,10 @@ class DiscordClient(discord.Client):
         self.logger.addHandler(self.handler)
         self.logger.addHandler(console_handler)
 
-        self.agent = agent or ConversationAgent()
-        self.token = token or Config.DISCORD_TOKEN
-
         self.pending_tasks: dict[int, asyncio.Task] = {}
+
+        self.agent = agent
+        self.token = token
 
     def start_client(self) -> None:
         """Start the Discord client."""

@@ -4,7 +4,7 @@ from datetime import datetime
 
 from pydantic import BaseModel, Field, field_validator
 
-from .sanitize_name import sanitize_name
+from ....utils.sanitize_name import sanitize_name
 
 
 class Message(BaseModel):

@@ -1,6 +1,5 @@
 """A module for the GrokAgent class."""
 
-from openai import AsyncOpenAI
 from openai.types.chat import (
     ChatCompletionAssistantMessageParam,
     ChatCompletionMessageParam,
@@ -9,21 +8,17 @@ from openai.types.chat import (
     ParsedChatCompletion,
 )
 
-from ...utils import Config, Message
-from ..agent_abc import Agent
-from .utils import Response
+from ..base_agent import BaseAgent
+from ..utils import LLMClient
+from .utils import Message, Response
 
 
-class ConversationAgent(Agent):
+class ConversationAgent(BaseAgent):
     """A class for the ConversationAgent."""
 
-    def __init__(self, name: str | None = None, api_key: str | None = None) -> None:
-        super().__init__(name or "Grok")
-        self.client = AsyncOpenAI(
-            api_key=api_key or Config.OPENAI_API_KEY,
-            # base_url="https://api.x.ai/v1",
-        )
-        self.model = "gpt-4o"
+    def __init__(self, client: LLMClient, name: str | None = None) -> None:
+        super().__init__(name)
+        self.client = client
 
         self.example_chat_history = self._load_text("src/text_files/chat_history.txt")
         self.prompt = (
@@ -60,7 +55,7 @@ class ConversationAgent(Agent):
         completion: ParsedChatCompletion[
             Response
         ] = await self.client.beta.chat.completions.parse(
-            model=self.model, messages=llm_messages, response_format=Response
+            model=self.client.model, messages=llm_messages, response_format=Response
         )
         response = completion.choices[0].message.parsed
 
