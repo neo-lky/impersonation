@@ -2,7 +2,6 @@
 
 from abc import ABC, abstractmethod
 
-import httpx
 from openai import AsyncOpenAI
 
 
@@ -19,7 +18,9 @@ class XAI(LLMClient):
     """A class for the XAI client."""
 
     model = "grok-2-latest"
-    base_url = httpx.URL("https://api.x.ai/v1")
+
+    def __init__(self, api_key: str):
+        super().__init__(api_key=api_key, base_url="https://api.x.ai/v1")
 
 
 class OpenAI(LLMClient):
